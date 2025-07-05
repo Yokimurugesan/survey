@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>SURVEY FORM</title> 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: aliceblue;
+      margin: 50px;
+    }
+    .container {
+      background: azure;
+      padding: 20px;
+      margin: auto;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    input, select, button {
+      width: 90%;
+      padding: 8px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    button {
+      background-color: blueviolet;
+      color: beige;
+      cursor: pointer;
+      border: none;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>EDUCATION SURVEY FORM</h2>
+
+    <form id="form" onsubmit="submitForm(event)">
+      <label for="sur-name">Name</label>
+      <input type="text" id="sur-name" placeholder="Enter your name" required>
+
+      <label for="gender">Gender</label>
+      <select id="gender" required>
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <label for="group">12th Group</label>
+      <select id="group" onchange="showcourse()" required>
+        <option value="">Select</option>
+        <option value="Biology">Biology</option>
+        <option value="Computer Science">Computer Science</option>
+      </select>
+
+      <label for="maths">Maths Mark</label>
+      <input type="number" id="maths" placeholder="Enter your maths mark" oninput="cutoffCalculate()" min="0" max="100" required>
+
+      <label for="physics">Physics Mark</label>
+      <input type="number" id="physics" placeholder="Enter your physics mark" oninput="cutoffCalculate()" min="0" max="100" required>
+
+      <label for="chemistry">Chemistry Mark</label>
+      <input type="number" id="chemistry" placeholder="Enter your chemistry mark" oninput="cutoffCalculate()" min="0" max="100" required>
+
+      <label for="cutoff">Cut-off</label>
+      <input type="text" id="cutoff" readonly>
+
+      <label for="prefcourse">Preferred Course</label>
+      <select id="prefcourse" required>
+        <option value="">Select your 12th group first</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function cutoffCalculate() {
+      let maths = parseFloat(document.getElementById("maths").value) || 0;
+      let physics = parseFloat(document.getElementById("physics").value) || 0;
+      let chemistry = parseFloat(document.getElementById("chemistry").value) || 0;
+      let cutoff = maths + (physics / 2) + (chemistry / 2);
+      document.getElementById("cutoff").value = cutoff.toFixed(2);
+    }
+
+    function showcourse() {
+      let group = document.getElementById("group").value;
+      let prefcourse = document.getElementById("prefcourse");
+      prefcourse.innerHTML = "<option value=''>Select</option>";
+
+      if (group === "Biology") {
+        prefcourse.innerHTML += "<option>NEET</option><option>Engineering</option><option>Arts</option>";
+      } else if (group === "Computer Science") {
+        prefcourse.innerHTML += "<option>Engineering</option><option>Arts</option>";
+      }  else {
+        prefcourse.innerHTML = "<option value=''>Select your 12th group first</option>";
+      }
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert("Submitted Successfully!");
+      document.getElementById("form").reset();
+      document.getElementById("cutoff").value = "";
+      document.getElementById("prefcourse").innerHTML = "<option value=''>Select your 12th group first</option>";
+    }
+  </script>
+</body>
+</html>
